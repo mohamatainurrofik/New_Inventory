@@ -39,6 +39,17 @@
         </div>
         <div class="row mb-7">
             <!--begin::Label-->
+            <label class="col-lg-4 fw-bold text-muted">Jenis Transaksi</label>
+            <!--end::Label-->
+            <!--begin::Col-->
+            <div class="col-lg-8" data-unique="departemenName">
+                <span class="fw-bolder fs-6 text-gray-800"><?= $order['order_type'] ?></span>
+                <input type="text" class="d-none" id="jenis_detailorder" value="<?= $order['order_type'] ?>">
+            </div>
+            <!--end::Col-->
+        </div>
+        <div class="row mb-7">
+            <!--begin::Label-->
             <label class="col-lg-4 fw-bold text-muted">Deskripsi</label>
             <!--end::Label-->
             <!--begin::Col-->

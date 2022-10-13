@@ -250,15 +250,30 @@ class OrderController extends BaseController
         $this->options->setIsHtml5ParserEnabled(true);
 
         $this->dompdf->setOptions($this->options);
-        $data['order'] = $this->db->table('orders')->select('orders.*,karyawans.nama,karyawans.nrp,unitkerja.unitkerja')->join('users', 'users.username = orders.created_by')->join('karyawans', 'karyawans.id_karyawan = users.karyawan_id')->join('unitkerja', 'unitkerja.id_unitkerja = orders.order_lokasi')->where('id_order', $jsonData->id)->get()->getRowArray();
+        $data['order'] = $this->db->table('orders')->select('orders.*,karyawans.nama,karyawans.nrp,unitkerja.unitkerja, departements.content')->join('users', 'users.username = orders.created_by')->join('karyawans', 'karyawans.id_karyawan = users.karyawan_id')->join('unitkerja', 'unitkerja.id_unitkerja = orders.order_lokasi')->join('departements', 'karyawans.jabatan_id = departements.id')->where('id_order', $jsonData->id)->get()->getRowArray();
         $data['dataorder'] = $this->order->listDataorder($jsonData->id);
-
-        $filename = '' . 62 . '.pdf';
-        $this->dompdf->loadHtml(view('print/buktipengajuan',  $data));
-        $this->dompdf->setPaper('A4', 'portrait'); //ukuran kertas dan orientasi
-        $this->dompdf->render();
-        $output = $this->dompdf->output();
-        return $this->response->download('' . $jsonData->id . '.pdf', $output);
+        if ($data['order']['order_type'] == 'Penggunaan') {
+            $data['approval'] = $this->order->getApproval($data['dataorder'][0]['jenis_product']);
+            $data['barcode'] = $this->makerTransaksi($jsonData->id);
+            $data['barcode1'] = $this->appoverTransaksi($data['approval']['nama'], $data['order']['status_order'], $data['order']['order_type']);
+            $this->dompdf->loadHtml(view('print/buktipengajuan',  $data));
+            $this->dompdf->setPaper('A4', 'portrait'); //ukuran kertas dan orientasi
+            $this->dompdf->render();
+            $output = $this->dompdf->output();
+            return $this->response->download('' . $jsonData->id . '.pdf', $output);
+        } else {
+            $data['approval'] = [
+                'name' => null,
+                'nama' => null,
+            ];
+            $data['barcode'] = $this->makerTransaksi($jsonData->id);
+            $data['barcode1'] = $this->appoverTransaksi($data['approval']['nama'], $data['order']['status_order'], $data['order']['order_type']);
+            $this->dompdf->loadHtml(view('print/buktipengajuan',  $data));
+            $this->dompdf->setPaper('A4', 'portrait'); //ukuran kertas dan orientasi
+            $this->dompdf->render();
+            $output = $this->dompdf->output();
+            return $this->response->download('' . $jsonData->id . '.pdf', $output);
+        }
     }
 
 
