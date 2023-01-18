@@ -262,7 +262,7 @@ const inventarisAdd = function () {
                     'milik' : $(tr).find('td:eq(6)').attr('data-idLokasi'),
                     'status_unit' : $(tr).find('td:eq(3)').attr('data-status'), 
                     'kode_unit' : '0000', 
-                    'foto_unit' : null, 
+                    'foto_unit' : 0, 
                     'kondisi' : $(tr).find('td:eq(2)').text(), 
                     'tahun_perolehan' : $(tr).find('td:eq(3)').text(), 
                     'invoice' : $(tr).find('td:eq(1)').attr('data-invoice'), 
@@ -285,27 +285,31 @@ const inventarisAdd = function () {
                         "Content-Type": "application/json",
                         "X-Requested-With": "XMLHttpRequest"
                     },
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    setTimeout(function () {
+                        // Remove loading indication
+                        console.log(data);
+                        // Show popup confirmation 
+                        Swal.fire({
+                            text: "Form has been successfully submitted!",
+                            icon: "success",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn btn-primary"
+                            }
+                        }).then(function (result) {
+                            if (result.isConfirmed) {
+                                // location.assign('/Data/Inventaris');
+                            }
+                        });
+    
+                        //form.submit(); // Submit form
+                    }, 2000);
                 });
-                setTimeout(function () {
-                    // Remove loading indication
-
-                    // Show popup confirmation 
-                    Swal.fire({
-                        text: "Form has been successfully submitted!",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    }).then(function (result) {
-                        if (result.isConfirmed) {
-                            location.assign('/Data/Inventaris');
-                        }
-                    });
-
-                    //form.submit(); // Submit form
-                }, 2000);
+                
             } catch (error) {
                 console.log(error);
             }

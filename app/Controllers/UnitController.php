@@ -94,6 +94,7 @@ class UnitController extends BaseController
                 // dd($params['savename']);   
                 $this->ciqrcode->generate($params);
             }
+            return json_encode($id);
         } catch (\Throwable $th) {
             throw $th;
         }

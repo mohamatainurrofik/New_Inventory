@@ -1,7 +1,7 @@
 <?= $this->extend('Layouts/aside/template') ?>
 <?= $this->section('content') ?>
 
-<h5 id="locationpath" class="d-none">/Form/cekmaintanance</h5>
+<h5 id="locationpath" class="d-none">/Form/cekMaintanance</h5>
 
 
 
@@ -44,18 +44,16 @@
                                 <option value="4">Mahal</option>
                                 <option value="5">Sangat Mahal</option>
                             </select>
-                        <?php } ?>
-                        <?php if ($value['kriteria'] == 'Kerusakan') { ?>
+                        <?php } elseif ($value['kriteria'] == 'Kerusakan') {  ?>
                             <select name="<?= $value['kriteria'] ?>" id="<?= $value['kriteria'] ?>" class="form-select form-select-solid fw-bolder kriteriaForAlternatif" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true">
                                 <option></option>
-                                <option value="1">Tidak Rusak</option>
-                                <option value="2">Sedikit Rusak</option>
-                                <option value="3">Cukup</option>
-                                <option value="4">Rusak</option>
-                                <option value="5">Sangat Rusak</option>
+                                <option value="1">Sangat Ringan</option>
+                                <option value="2">Ringan</option>
+                                <option value="3">Sedang</option>
+                                <option value="4">Berat</option>
+                                <option value="5">Sangat Berat</option>
                             </select>
-                        <?php } ?>
-                        <?php if ($value['kriteria'] == 'Kepentingan') { ?>
+                        <?php } elseif ($value['kriteria'] == 'Kepentingan') { ?>
                             <select name="<?= $value['kriteria'] ?>" id="<?= $value['kriteria'] ?>" class="form-select form-select-solid fw-bolder kriteriaForAlternatif" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true">
                                 <option></option>
                                 <option value="1">Tidak Penting</option>
@@ -64,8 +62,7 @@
                                 <option value="4">Penting</option>
                                 <option value="5">Sangat Penting</option>
                             </select>
-                        <?php } ?>
-                        <?php if ($value['kriteria'] == 'JumlahPersediaan') { ?>
+                        <?php } elseif ($value['kriteria'] == 'JumlahPersediaan') { ?>
                             <select name="<?= $value['kriteria'] ?>" id="<?= $value['kriteria'] ?>" class="form-select form-select-solid fw-bolder kriteriaForAlternatif" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true">
                                 <option></option>
                                 <option value="1">Sangat Sedikit</option>
@@ -73,6 +70,15 @@
                                 <option value="3">Cukup</option>
                                 <option value="4">Banyak</option>
                                 <option value="5">Sangat Banyak</option>
+                            </select>
+                        <?php } else { ?>
+                            <select name="<?= $value['kriteria'] ?>" id="<?= $value['kriteria'] ?>" class="form-select form-select-solid fw-bolder kriteriaForAlternatif" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true">
+                                <option></option>
+                                <option value="1">Sangat Jelek</option>
+                                <option value="2">Jelek</option>
+                                <option value="3">Cukup</option>
+                                <option value="4">Bagus</option>
+                                <option value="5">Sangat Bagus</option>
                             </select>
                         <?php } ?>
                     </div>
@@ -86,7 +92,7 @@
             </div>
             <div class="d-flex justify-content-end align-items-center d-none" data-kt-maintanance-table-toolbar="afterhitung">
                 <button type="button" class="btn btn-primary" data-kt-maintanance-table-save="save">Save</button>
-                <a href="/Form/pengajuanMaintanance" class="btn btn-danger" data-kt-maintanace-table-recount="recount">Hitung Ulang</a>
+                <a href="/Form/cekMaintanance" class="btn btn-danger" data-kt-maintanace-table-recount="recount">Hitung Ulang</a>
             </div>
 
 

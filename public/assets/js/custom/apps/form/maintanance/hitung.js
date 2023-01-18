@@ -316,8 +316,9 @@ const hitungFormMaintanance = function () {
                 let sum= 0;
                 $('#alternatifTable tbody tr td[data-kriteria="'+that.data('kriteria')+'"]').each(function(){
                     let thoose = $(this);
-                    sum += parseFloat(thoose.html())**2;
+                    sum = sum +  (parseFloat(thoose.html())**2);
                 })
+                console.log(sum);
                 let normValue = parseFloat(that.html())/(Math.sqrt(sum));
                 dataNorm.push(normValue);
             })
@@ -338,14 +339,12 @@ const hitungFormMaintanance = function () {
                 $('#NormalisasiAlternatifTable tbody tr td[data-kriteria="'+that.data('kriterianorm1')+'"]').each(function(){
                     normalisasiTerbobot = parseFloat(bobotNormalisasi) * parseFloat($(this).html());
                     // console.log(` ${parseFloat(bobotNormalisasi)} * ${parseFloat($(this).html())}`);
-                    datanormTerbobot.push(normalisasiTerbobot); 
+                    datanormTerbobot.push(normalisasiTerbobot);
+                    $('#NormalisasTerbobotAlternatifTable tbody tr').find('td[data-kriteria="'+$(this).data('kriteria')+'"][data-alternatif="'+$(this).data('alternatif')+'"]').html(normalisasiTerbobot.toFixed(4)); 
                 });
             })
             
-            $('#NormalisasTerbobotAlternatifTable tbody tr td:not(:first-child)').each(function(){
-                $(this).html(datanormTerbobot[i].toFixed(4));
-                i++;
-            })
+
         }
 
         function getSolusiIdeal()
@@ -385,11 +384,11 @@ const hitungFormMaintanance = function () {
                 $('#NormalisasTerbobotAlternatifTable tbody tr td[data-kriteria="'+that.data('solusikriteria')+'"]').each(function(){
                     if (that.data('solusi') == 'positif') {
                         let value = (parseFloat($(this).html())-parseFloat(that.html()))**2;
-                        console.log(`${parseFloat($(this).html())} - ${parseFloat(that.html())}`);
+                        
                         posifit.push(value.toFixed(4));
                     } else {
                         let value1 = (parseFloat($(this).html())-parseFloat(that.html()))**2;
-                        console.log(`${parseFloat($(this).html())} - ${parseFloat(that.html())}`);
+                       
                         negatif.push(value1.toFixed(4));
                     }
                 })
@@ -441,7 +440,7 @@ const hitungFormMaintanance = function () {
             )
             fixData = newArr;
             newArr.sort((a,b) => parseFloat(b.preventif) - parseFloat(a.preventif));
-            console.log(newArr);
+
             var html ;
             newArr.forEach((item, index) =>{
                 let i = index +1;
